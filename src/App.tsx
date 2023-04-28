@@ -1,9 +1,9 @@
 import "./App.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components";
-import { Dashboard } from "./pages";
+import { Dashboard, Posts, NotFound, CreatePost } from "./pages";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { themeSettings } from "./theme";
 
 function App() {
@@ -12,12 +12,17 @@ function App() {
     <div className="app">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Routes>
-          <Route index element={<Navigate to={"/dashboard"} replace />} />
-          <Route element={<Layout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<h1>...Loading</h1>}>
+          <Routes>
+            <Route index element={<Navigate to={"/dashboard"} replace />} />
+            <Route element={<Layout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="manage-posts" element={<Posts />} />
+              <Route path="create-post" element={<CreatePost />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </ThemeProvider>
     </div>
   );
