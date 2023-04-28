@@ -8,7 +8,6 @@ import {
 import {
   AppBar,
   Avatar,
-  Box,
   IconButton,
   InputBase,
   Toolbar,
